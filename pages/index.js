@@ -1,8 +1,16 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { PrismaClient } from '@prisma/client'
 
-export default function Home() {
+export async function getStaticProps() {
+  // This will load server-side assets like problems, user profiles, and leaderboard
+  const prisma = new PrismaClient();
+  const problems = await prisma.problem.findMany();
+  return {
+    props: { problems }
+  }
+}
+
+export default ({problems}) => {
   return (
     <div>
 
@@ -24,7 +32,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Demo table, subject to change */}
+      {/* Server-loaded problem table */}
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -35,47 +43,35 @@ export default function Home() {
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Difficulty</th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
                     <th scope="col" className="relative px-6 py-3">
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="ml-4">
-                          abc
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      xyz
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">1.7</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Solved</td>
-                  </tr>
+                <tbody className="bg-white divide-y divide-gray-200 content">
 
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="ml-4">
-                          abc
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      xyz
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">3.0</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Solved</td>
-                  </tr>
+                  {/* Map problems to table rows */}
+                  {problems.map(problem => {
+                    return (
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              {problem.name}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {problem.description}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">{problem.difficulty}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{problem.points}</td>
+                      </tr>
+                    );
+                  })}
 
                 </tbody>
               </table>
