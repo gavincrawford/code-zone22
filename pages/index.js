@@ -10,7 +10,7 @@ export async function getStaticProps() {
   }
 }
 
-export default ({problems}) => {
+const Home = ({problems}) => {
   return (
     <div>
 
@@ -54,7 +54,7 @@ export default ({problems}) => {
                   {/* Map problems to table rows */}
                   {problems.map(problem => {
                     return (
-                      <tr>
+                      <tr key={problem.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
@@ -84,3 +84,5 @@ export default ({problems}) => {
     </div>
   )
 }
+
+export default Home;
