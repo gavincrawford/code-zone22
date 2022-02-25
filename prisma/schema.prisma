@@ -12,6 +12,7 @@ model Account {
   name            String    @unique
   organizer       Boolean   @default(false)
   solved_problems Problem[]
+  points          Int       @default(0)
 }
 
 model Problem {

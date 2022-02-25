@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { PrismaClient } from '@prisma/client'
-import RedirectButton, { ActiveButton } from '../components/button'
+import RedirectButton from '../components/button'
 
 export async function getStaticProps() {
   // This will load server-side assets like problems, user profiles, and leaderboard
