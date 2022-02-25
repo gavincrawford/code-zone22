@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { PrismaClient } from '@prisma/client'
+import RedirectButton, { ActiveButton } from '../components/button'
 
 export async function getStaticProps() {
   // This will load server-side assets like problems, user profiles, and leaderboard
@@ -11,6 +12,7 @@ export async function getStaticProps() {
 }
 
 const Home = ({problems}) => {
+
   return (
     <div>
 
@@ -26,9 +28,9 @@ const Home = ({problems}) => {
         <div className="text-size-4 bg-gray-200 text-black hover:bg-gray-500 hover:text-white transition-all p-2">
           <span className="px-6">CODE_COMP</span>
           {/* Buttons */}
-          <button className="px-2"><span className="px-3 rounded-full bg-blue-400">problems</span></button>
-          <button className="px-2"><span className="px-3 rounded-full bg-blue-400">solutions</span></button>
-          <button className="px-2"><span className="px-3 rounded-full bg-blue-400">teams</span></button>
+          <RedirectButton href="/leaderboard">leaderboard</RedirectButton>
+          <RedirectButton href="/solutions">solutions</RedirectButton>
+          <RedirectButton href="/">problems</RedirectButton>
         </div>
       </div>
 
