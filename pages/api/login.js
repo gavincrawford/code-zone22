@@ -7,9 +7,8 @@ export default function login(req, res) {
             name: req.body.username
         }
     }).then((account) => {
-        console.log(account);
         if (account.password === req.body.password) {
-            res.json({success: true, account});
+            res.json({success: true, name: account.name});
         } else {
             res.json({success: false, message: "Incorrect password"});
         }

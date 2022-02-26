@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { PrismaClient } from '@prisma/client'
+import { useCookies } from "react-cookie";
 import RedirectButton from '../components/button'
 
 export async function getStaticProps() {
@@ -12,6 +13,8 @@ export async function getStaticProps() {
 }
 
 const Home = ({problems}) => {
+
+  const [cookie, setCookie] = useCookies(["user"]);
 
   return (
     <div>
@@ -31,6 +34,7 @@ const Home = ({problems}) => {
           <RedirectButton href="/leaderboard">leaderboard</RedirectButton>
           <RedirectButton href="/solutions">solutions</RedirectButton>
           <RedirectButton href="/">problems</RedirectButton>
+          <RedirectButton href="/login">logged in as <span className="text-white">{cookie.user ? cookie.user : "Guest"}</span></RedirectButton>
         </div>
       </div>
 
