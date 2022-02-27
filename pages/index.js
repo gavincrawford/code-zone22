@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { PrismaClient } from '@prisma/client'
-import { useCookies } from "react-cookie";
-import RedirectButton from '../components/button'
+import Header from '../components/header'
 
 export async function getStaticProps() {
   // This will load server-side assets like problems, user profiles, and leaderboard
@@ -14,8 +13,6 @@ export async function getStaticProps() {
 
 const Home = ({problems}) => {
 
-  const [cookie, setCookie] = useCookies(["user"]);
-
   return (
     <div>
 
@@ -27,16 +24,7 @@ const Home = ({problems}) => {
       </Head>
 
       {/* Header bar */}
-      <div className="flex flex-col w-screen">
-        <div className="text-size-4 bg-gray-200 text-black hover:bg-gray-500 hover:text-white transition-all p-2">
-          <span className="px-6">CODE_COMP</span>
-          {/* Buttons */}
-          <RedirectButton href="/leaderboard">leaderboard</RedirectButton>
-          <RedirectButton href="/solutions">solutions</RedirectButton>
-          <RedirectButton href="/">problems</RedirectButton>
-          <RedirectButton href="/login">logged in as <span className="text-white">{cookie.user ? cookie.user : "Guest"}</span></RedirectButton>
-        </div>
-      </div>
+      <Header></Header>
 
       {/* Server-loaded problem table */}
       <div className="flex flex-col">

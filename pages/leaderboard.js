@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import RedirectButton from '../components/button'
+import Header from '../components/header'
 
 export async function getStaticProps() {
     // This will load server-side users, ordered by points
@@ -18,15 +19,7 @@ const Leaderbord = ({accounts}) => {
     return (
         <div>
             {/* Header bar */}
-            <div className="flex flex-col w-screen">
-                <div className="text-size-4 bg-gray-200 text-black hover:bg-gray-500 hover:text-white transition-all p-2">
-                <span className="px-6">CODE_COMP</span>
-                {/* Buttons */}
-                <RedirectButton href="/leaderboard">leaderboard</RedirectButton>
-                <RedirectButton href="/solutions">solutions</RedirectButton>
-                <RedirectButton href="/">problems</RedirectButton>
-                </div>
-            </div>
+            <Header></Header>
 
             {/* Server-loaded problem table */}
             <div className="flex flex-col">
