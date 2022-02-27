@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { PrismaClient } from '@prisma/client'
 import Header from '../components/header'
+import RedirectButton from '../components/button';
 
 export async function getStaticProps() {
   // This will load server-side assets like problems, user profiles, and leaderboard
@@ -52,7 +53,7 @@ const Home = ({problems}) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
-                              {problem.name}
+                            <td><RedirectButton href={"/problem/?p=" + problem.id}>{problem.name}</RedirectButton></td>
                             </div>
                           </div>
                         </td>
