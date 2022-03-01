@@ -53,7 +53,7 @@ const Home = ({problems}) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
-                            <td><RedirectButton href={"/problem/?p=" + problem.id}>{problem.name}</RedirectButton></td>
+                            <span><RedirectButton href={"/problem/?p=" + problem.id}>{problem.name}</RedirectButton></span>
                             </div>
                           </div>
                         </td>
