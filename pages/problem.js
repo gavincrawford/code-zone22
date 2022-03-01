@@ -39,8 +39,20 @@ const Problem = ({ problem }) => {
                         </span>
                     </span>
                 </div>
-                <div className="p-5">
-                    {problem.description}
+                <div className="flex mb-4 pt-4 text-xl">
+                    <div className="grow bg-gray-50">
+                        <div className="font-extrabold">description</div>
+                        {problem.description}
+                    </div>
+                    <div className="grow bg-gray-100">
+                        <div className="font-extrabold">example inputs</div>
+                        {"⇛ \""}{problem.inputs}{"\""}
+                        <div className="font-extrabold">example outputs</div>
+                        {"⇚ \""}{problem.outputs}{"\""}
+                    </div>
+                    <div className="grow bg-gray-50">
+                        <div className="font-extrabold">submissions</div>
+                    </div>
                 </div>
             </div>
         </div>
