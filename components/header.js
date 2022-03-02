@@ -15,7 +15,7 @@ function Header() {
                 <RedirectButton href="/login">logged in as <span className="text-white">{cookie.user ? cookie.user : "Guest"}</span></RedirectButton>
             </div>
         </div>
-    )
+    );
 }
 
 export default Header;

@@ -1,3 +1,13 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "jsx-quotes": ["error", "prefer-double"],
+    "arrow-body-style": ["error", "as-needed"],
+    "curly": ["error", "all"],
+    "no-var": ["error"],
+    "prefer-const": ["error"],
+    "no-extra-semi": ["error"],
+    "semi": ["error", "always"],
+    "indent": ["error", 4, { "SwitchCase": 1 }]
+  }
 }

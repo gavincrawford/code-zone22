@@ -15,4 +15,4 @@ export default function login(req, res) {
     }).catch((err) => {
         res.json({success: false, message: "User not found"});
     });
-};
+}

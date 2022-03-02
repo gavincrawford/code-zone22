@@ -1,4 +1,4 @@
-import Header from '../components/header'
+import Header from '../components/header';
 import { PrismaClient } from '@prisma/client';
 
 export async function getServerSideProps(ctx) {
@@ -13,53 +13,47 @@ export async function getServerSideProps(ctx) {
         props: {
             problem
         }
-    }
+    };
 }
 
-const Problem = ({ problem }) => {
-
-    return (
-        <>
-            {/* MathJax */}
-            <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-            <Header></Header>
-            <div className="p-4">
-                <div className="flex-col">
-                    <span className="text-4xl px-5">
-                        <span className="rounded-full bg-gray-200 px-4">
-                            {problem.name}
-                        </span>
+const Problem = ({ problem }) => (
+    <>
+        <Header/>
+        <div className="p-4">
+            <div className="flex-col">
+                <span className="text-4xl px-5">
+                    <span className="rounded-full bg-gray-200 px-4">
+                        {problem.name}
                     </span>
-                    <span className="text-4xl px-5">
-                        <span className="rounded-full bg-blue-400 px-4">
+                </span>
+                <span className="text-4xl px-5">
+                    <span className="rounded-full bg-blue-400 px-4">
                             points: {problem.points}
-                        </span>
                     </span>
-                    <span className="text-4xl px-5">
-                        <span className="rounded-full bg-blue-400 px-4">
+                </span>
+                <span className="text-4xl px-5">
+                    <span className="rounded-full bg-blue-400 px-4">
                             difficulty: {problem.difficulty}
-                        </span>
                     </span>
+                </span>
+            </div>
+            <div className="flex mb-4 pt-4 text-xl">
+                <div className="grow bg-gray-50">
+                    <div className="font-extrabold">description</div>
+                    {problem.description}
                 </div>
-                <div className="flex mb-4 pt-4 text-xl">
-                    <div className="grow bg-gray-50">
-                        <div className="font-extrabold">description</div>
-                        {problem.description}
-                    </div>
-                    <div className="grow bg-gray-100">
-                        <div className="font-extrabold">example inputs</div>
-                        {"⇛ \""}{problem.inputs}{"\""}
-                        <div className="font-extrabold">example outputs</div>
-                        {"⇚ \""}{problem.outputs}{"\""}
-                    </div>
-                    <div className="grow bg-gray-50">
-                        <div className="font-extrabold">submissions</div>
-                    </div>
+                <div className="grow bg-gray-100">
+                    <div className="font-extrabold">example inputs</div>
+                    {"⇛ \""}{problem.inputs}{"\""}
+                    <div className="font-extrabold">example outputs</div>
+                    {"⇚ \""}{problem.outputs}{"\""}
+                </div>
+                <div className="grow bg-gray-50">
+                    <div className="font-extrabold">submissions</div>
                 </div>
             </div>
-        </>
-    )
-}
+        </div>
+    </>
+);
 
 export default Problem;
