@@ -15,7 +15,7 @@ export async function getStaticProps() {
 const Home = ({problems}) => {
 
   return (
-    <div>
+    <>
 
       {/* Title/favicon */}
       <Head>
@@ -39,9 +39,6 @@ const Home = ({problems}) => {
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Difficulty</th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 content">
@@ -53,7 +50,7 @@ const Home = ({problems}) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="ml-4">
-                            <span><RedirectButton href={"/problem/?p=" + problem.id}>{problem.name}</RedirectButton></span>
+                            <RedirectButton href={"/problem/?p=" + problem.id}>{problem.name}</RedirectButton>
                             </div>
                           </div>
                         </td>
@@ -76,7 +73,7 @@ const Home = ({problems}) => {
       </div>
 
 
-    </div>
+    </>
   )
 }
 

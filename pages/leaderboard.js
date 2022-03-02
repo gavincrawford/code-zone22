@@ -15,9 +15,10 @@ export async function getStaticProps() {
     }
   }
 
-const Leaderbord = ({accounts}) => {
+const Leaderboard = ({accounts}) => {
     return (
-        <div>
+        <>
+
             {/* Header bar */}
             <Header></Header>
 
@@ -31,9 +32,6 @@ const Leaderbord = ({accounts}) => {
                         <tr>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-                            <th scope="col" className="relative px-6 py-3">
-                            <span className="sr-only">Edit</span>
-                            </th>
                         </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 content">
@@ -62,8 +60,9 @@ const Leaderbord = ({accounts}) => {
                 </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
-export default Leaderbord;
+export default Leaderboard;
+  
