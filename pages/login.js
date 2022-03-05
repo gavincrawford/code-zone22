@@ -1,4 +1,4 @@
-import Header from "../components/header"
+import Header from "../components/header";
 import RedirectButton from "../components/button";
 import { useCookies } from "react-cookie";
 

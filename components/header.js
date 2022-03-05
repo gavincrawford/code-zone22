@@ -14,9 +14,9 @@ function Header() {
                 <RedirectButton href="/">problems</RedirectButton>
                 {
                     cookie.user
-                    ?
+                        ?
                         <RedirectButton href="/logout">logout <span className="text-white">({cookie.user})</span></RedirectButton>
-                    :
+                        :
                         <RedirectButton href="/login">login/signup</RedirectButton>
                 }
             </div>
