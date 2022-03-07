@@ -1,5 +1,6 @@
 import Header from '../components/header';
 import { PrismaClient } from '@prisma/client';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 export async function getServerSideProps(ctx) {
     const query = ctx.query;
@@ -46,7 +47,22 @@ const Problem = ({ problem }) => {
                 <div className="flex mb-4 pt-4 text-xl">
                     <div className="grow bg-gray-50">
                         <div className="font-extrabold">description</div>
-                        {problem.description}
+                        <MathJaxContext config={{
+                            loader: {load: [
+                                "[tex]/cancel",
+                                "[tex]/ams"
+                           ]},
+                           tex: {packages: {
+                                '[+]': [
+                                    "cancel",
+                                    "amsmath",
+                                    "amssymb",
+                                    "amsthm"
+                                ]
+                           }}
+                        }}>
+                            <MathJax>{problem.description}</MathJax>
+                        </MathJaxContext>
                     </div>
                     <div className="grow bg-gray-100">
                         <div className="font-extrabold">example inputs</div>
