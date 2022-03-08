@@ -51,15 +51,15 @@ const Problem = ({ problem }) => {
                             loader: {load: [
                                 "[tex]/cancel",
                                 "[tex]/ams"
-                           ]},
-                           tex: {packages: {
+                            ]},
+                            tex: {packages: {
                                 '[+]': [
                                     "cancel",
                                     "amsmath",
                                     "amssymb",
                                     "amsthm"
                                 ]
-                           }}
+                            }}
                         }}>
                             <MathJax>{problem.description}</MathJax>
                         </MathJaxContext>

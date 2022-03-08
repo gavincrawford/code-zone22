@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import RedirectButton from '../components/button';
 import Header from '../components/header';
 
-export async function getStaticProps() {
+export async function getServerSideProps(ctx) {
     // This will load server-side users, ordered by points
     const prisma = new PrismaClient();
     const accounts = await prisma.account.findMany({
