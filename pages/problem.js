@@ -72,8 +72,9 @@ const Problem = ({ problem }) => {
                     </div>
                     <div className="grow bg-gray-50">
                         <div className="font-extrabold">submissions</div>
-                        <form className="py-2" onSubmit={submit}>
-                            <input type="file"></input>
+                        {/* fancy multer form data thingy, no idea how it works i got this off stack overflow */}
+                        <form className="py-2" action="/api/upload" method="post" encType="multipart/form-data">
+                            <input type="file" name="uploaded_file"></input>
                             <button type="submit" className="rounded-full bg-blue-200 px-4">Submit</button>
                         </form>
                     </div>
