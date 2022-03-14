@@ -1,5 +1,6 @@
 import nc from "next-connect";
 import multer from "multer";
+import { exec } from "child_process";
 
 
 const upload = multer({
@@ -31,7 +32,17 @@ const api = nc({
 api.use(upload.single("uploaded_file"));
 
 api.post((req, res) => {
-    res.status(200).json({ statusCode: 200, message: "Uploaded file!" });
+    console.log(`[+] Got file: ${req.file.filename}`);
+    exec(`python ${req.file.path}`, (err, stdout, stderr) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ statusCode: 500, message: "Your script failed to run." }); // TODO: Error traces
+        } else {
+            console.log(stdout);
+            res.status(200).json({ statusCode: 200, message: stdout });
+        }
+    });
+    // TODO: Add submission to database
 });
 
 export default api;
