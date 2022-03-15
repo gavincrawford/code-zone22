@@ -51,4 +51,4 @@ export const config = {
     api: {
         bodyParser: false // Cosume data as stream
     }
-}
+};

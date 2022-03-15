@@ -26,20 +26,20 @@ const Problem = ({ problem }) => {
     return (
         <>
             <Header/>
-            <div className="p-4">
+            <div className="p-3">
                 <div className="flex-col">
-                    <span className="text-4xl px-5">
-                        <span className="rounded-full bg-gray-200 px-4">
+                    <span className="text-4xl px-2">
+                        <span className="rounded bg-gray-200 px-2">
                             {problem.name}
                         </span>
                     </span>
-                    <span className="text-4xl px-5">
-                        <span className="rounded-full bg-blue-400 px-4">
+                    <span className="text-4xl px-2">
+                        <span className="rounded bg-blue-400 px-2">
                                 points: {problem.points}
                         </span>
                     </span>
-                    <span className="text-4xl px-5">
-                        <span className="rounded-full bg-blue-400 px-4">
+                    <span className="text-4xl px-2">
+                        <span className="rounded bg-blue-400 px-2">
                                 difficulty: {problem.difficulty}
                         </span>
                     </span>
@@ -75,7 +75,7 @@ const Problem = ({ problem }) => {
                         {/* fancy multer form data thingy, no idea how it works i got this off stack overflow */}
                         <form className="py-2" action="/api/upload" method="post" encType="multipart/form-data">
                             <input type="file" name="uploaded_file"></input>
-                            <button type="submit" className="rounded-full bg-blue-200 px-4">Submit</button>
+                            <button type="submit" className="rounded bg-blue-200 px-4">Submit</button>
                         </form>
                     </div>
                 </div>
