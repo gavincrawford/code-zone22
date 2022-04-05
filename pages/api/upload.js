@@ -1,6 +1,6 @@
 import nc from "next-connect";
 import multer from "multer";
-import { exec } from "child_process";
+import { exec, spawn } from "child_process";
 
 
 const upload = multer({
@@ -22,10 +22,12 @@ const upload = multer({
 const api = nc({
     onError: (req, res, err) => {
         console.log(err.stack);
-        res.status(500).json({ statusCode: 500, message: "Uh oh! Something broke. Tell the devs, we'll fix it as soon as we can." });
+        res.statusCode = 500;
+        res.statusMessage = "Oops, something went wrong!";
     },
     onNoMatch: (req, res) => {
-        res.status(404).json({ statusCode: 404, message: "Uh oh! We couldn't find the page you were looking for." });
+        res.statusCode = 404;
+        res.statusMessage = "Not found!";
     }
 });
 
