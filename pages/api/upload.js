@@ -1,6 +1,7 @@
 import nc from "next-connect";
 import multer from "multer";
 import { exec, spawn } from "child_process";
+import { PrismaClient } from '@prisma/client';
 
 
 const upload = multer({
@@ -33,18 +34,38 @@ const api = nc({
 
 api.use(upload.single("uploaded_file"));
 
-api.post((req, res) => {
+api.post(async (req, res) =>{
+
+    const id = req.query.p;
+    const prisma = new PrismaClient();
+    const problem = await prisma.problem.findUnique({
+        where: {
+            id: parseInt(req.query.p)
+        }
+    });
+
     console.log(`[+] Got file: ${req.file.filename}`);
-    exec(`python ${req.file.path}`, (err, stdout, stderr) => {
+
+    const proc = exec(`python ${req.file.path}`, (err, stdout, stderr) => {
         if (err) {
             console.log(err);
             res.status(500).json({ statusCode: 500, message: "Your script failed to run." }); // TODO: Error traces
         } else {
             console.log(stdout);
-            res.status(200).json({ statusCode: 200, message: stdout });
+
+            let solved = false;
+            if (stdout == problem.outputs + "\n") {
+                // TODO Add solves
+                solved = true;
+            }
+
+            res.status(200).json({ statusCode: 200, message: solved ? "Correct" : "Incorrect", solve: solved});
+
         }
     });
-    // TODO: Add submission to database
+
+    proc.stdin.write("\"" + problem.inputs + "\"\n"); // Inputs
+
 });
 
 export default api;

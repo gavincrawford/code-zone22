@@ -12,12 +12,13 @@ export async function getServerSideProps(ctx) {
     });
     return {
         props: {
-            problem
+            problem,
+            id: query.p
         }
     };
 }
 
-const Problem = ({ problem }) => {
+const Problem = ({ problem, id}) => {
 
     function submit() {
         // do file submission here
@@ -73,7 +74,7 @@ const Problem = ({ problem }) => {
                     <div className="grow bg-gray-50">
                         <div className="font-extrabold">submissions</div>
                         {/* fancy multer form data thingy, no idea how it works i got this off stack overflow */}
-                        <form className="py-2" action="/api/upload" method="post" encType="multipart/form-data">
+                        <form className="py-2" action={"/api/upload?p=" + id} method="post" encType="multipart/form-data">
                             <input type="file" name="uploaded_file"></input>
                             <button type="submit" className="rounded bg-blue-200 px-4">Submit</button>
                         </form>
