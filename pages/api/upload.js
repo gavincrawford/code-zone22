@@ -54,7 +54,7 @@ api.post(async (req, res) =>{
             console.log(stdout);
 
             let solved = false;
-            if (stdout == problem.outputs + "\n") {
+            if (stdout == "\"" + problem.outputs + "\"\n") {
                 // TODO Add solves
                 solved = true;
             }
