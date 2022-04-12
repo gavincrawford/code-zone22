@@ -51,10 +51,13 @@ api.post(async (req, res) =>{
             console.log(err);
             res.status(500).json({ statusCode: 500, message: "Your script failed to run." }); // TODO: Error traces
         } else {
+
             console.log(stdout);
 
             let solved = false;
-            if (stdout == "\"" + problem.outputs + "\"\n") {
+
+            // Check if the response is correct
+            if (stdout == "\"" + problem.outputs + "\"\n" || stdout == problem.outputs + "\n") {
                 // TODO Add solves
                 solved = true;
             }
