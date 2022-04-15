@@ -46,7 +46,10 @@ api.post(async (req, res) =>{
 
     console.log(`[+] Got file: ${req.file.filename}`);
 
-    const proc = exec(`python ${req.file.path}`, (err, stdout, stderr) => {
+    const proc = exec(`python ${req.file.path}`, {
+        timeout: 1000, // 1 second
+        maxBuffer: 1024 * 1024 * 10 // 10MB
+    }, (err, stdout, stderr) => {
         if (err) {
             console.log(err);
             res.status(500).json({ statusCode: 500, message: "Your script failed to run." }); // TODO: Error traces
@@ -57,7 +60,7 @@ api.post(async (req, res) =>{
             let solved = false;
 
             // Check if the response is correct
-            if (stdout == "\"" + problem.outputs + "\"\n" || stdout == problem.outputs + "\n") {
+            if (stdout == "\"" + problem.test_case_outputs + "\"\n" || stdout == problem.test_case_outputs + "\n") {
                 // TODO Add solves
                 solved = true;
             }
@@ -67,7 +70,7 @@ api.post(async (req, res) =>{
         }
     });
 
-    proc.stdin.write("\"" + problem.inputs + "\"\n"); // Inputs
+    proc.stdin.write("\"" + problem.test_case_inputs + "\"\n"); // Inputs
 
 });
 

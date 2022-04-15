@@ -67,9 +67,9 @@ const Problem = ({ problem, id}) => {
                     </div>
                     <div className="grow bg-gray-100">
                         <div className="font-extrabold">example inputs</div>
-                        {"⇛ \""}{problem.inputs}{"\""}
+                        {"⇛ \""}{problem.example_inputs}{"\""}
                         <div className="font-extrabold">example outputs</div>
-                        {"⇚ \""}{problem.outputs}{"\""}
+                        {"⇚ \""}{problem.example_outputs}{"\""}
                     </div>
                     <div className="grow bg-gray-50">
                         <div className="font-extrabold">submissions</div>

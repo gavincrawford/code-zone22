@@ -17,13 +17,15 @@ model Account {
 }
 
 model Problem {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  description String   @unique
-  difficulty  Float    @default(0.0)
-  points      Int      @default(0)
-  inputs      String
-  outputs     String
-  accountId   Int?
-  Account     Account? @relation(fields: [accountId], references: [id])
+  id                Int      @id @default(autoincrement())
+  name              String   @unique
+  description       String   @unique
+  difficulty        Float    @default(0.0)
+  points            Int      @default(0)
+  example_inputs    String
+  example_outputs   String
+  test_case_inputs  String
+  test_case_outputs String
+  accountId         Int?
+  Account           Account? @relation(fields: [accountId], references: [id])
 }
