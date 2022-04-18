@@ -10,7 +10,7 @@
     "start-db": "prisma db push"
   },
   "dependencies": {
-    "@prisma/client": "^3.11.0",
+    "@prisma/client": "^3.11.1",
     "better-react-mathjax": "^1.0.3",
     "cookie": "^0.4.2",
     "multer": "^1.4.4",
