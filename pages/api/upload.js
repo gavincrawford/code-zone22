@@ -65,7 +65,7 @@ api.post(async (req, res) =>{
                 solved = true;
             }
 
-            res.status(200).json({ statusCode: 200, message: solved ? "Correct" : "Incorrect", solve: solved});
+            res.redirect(`/problem?p=${id}`); // Redirect user back to problem page
 
         }
     });

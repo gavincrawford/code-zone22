@@ -1,6 +1,7 @@
 import Header from '../components/header';
 import { PrismaClient } from '@prisma/client';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import { useCookies } from "react-cookie";
 
 export async function getServerSideProps(ctx) {
     const query = ctx.query;
@@ -20,9 +21,8 @@ export async function getServerSideProps(ctx) {
 
 const Problem = ({ problem, id}) => {
 
-    function submit() {
-        // do file submission here
-    }
+    const [cookie, setCookie] = useCookies(["user"]);
+    const user = cookie.user;
 
     return (
         <>
@@ -74,7 +74,7 @@ const Problem = ({ problem, id}) => {
                     <div className="grow bg-gray-50">
                         <div className="font-extrabold">submissions</div>
                         {/* fancy multer form data thingy, no idea how it works i got this off stack overflow */}
-                        <form className="py-2" action={"/api/upload?p=" + id} method="post" encType="multipart/form-data">
+                        <form className="py-2" action={"/api/upload?p=" + id + "&u=" + user} method="post" encType="multipart/form-data">
                             <input type="file" name="uploaded_file"></input>
                             <button type="submit" className="rounded bg-blue-200 px-4">Submit</button>
                         </form>
