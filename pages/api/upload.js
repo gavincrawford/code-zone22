@@ -37,16 +37,27 @@ api.use(upload.single("uploaded_file"));
 api.post(async (req, res) =>{
 
     const id = req.query.p;
+    const name = req.query.u;
+
+    console.log(`[+] User "${name}" attempting p${id}`);
+
+    // Fetch information from database
     const prisma = new PrismaClient();
     const problem = await prisma.problem.findUnique({
         where: {
             id: parseInt(req.query.p)
         }
     });
+    const user = await prisma.account.findUnique({
+        where: {
+            name: name
+        }
+    })
+
 
     console.log(`[+] Got file: ${req.file.filename}`);
 
-    const proc = exec(`python ${req.file.path}`, {
+    const proc = exec(`python3 ${req.file.path}`, {
         timeout: 1000, // 1 second
         maxBuffer: 1024 * 1024 * 10 // 10MB
     }, (err, stdout, stderr) => {
@@ -70,7 +81,7 @@ api.post(async (req, res) =>{
         }
     });
 
-    proc.stdin.write("\"" + problem.test_case_inputs + "\"\n"); // Inputs
+    proc.stdin.write(problem.test_case_inputs + "\n"); // Inputs
 
 });
 
