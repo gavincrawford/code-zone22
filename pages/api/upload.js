@@ -63,7 +63,8 @@ api.post(async (req, res) =>{
     }, (err, stdout, stderr) => {
         if (err) {
             console.log(err);
-            res.status(500).json({ statusCode: 500, message: "Your script failed to run." }); // TODO: Error traces
+            // TODO: Error traces
+            res.redirect(`/problem?p=${id}&ctx=error`);
         } else {
 
             console.log(stdout);
@@ -76,7 +77,8 @@ api.post(async (req, res) =>{
                 solved = true;
             }
 
-            res.redirect(`/problem?p=${id}`); // Redirect user back to problem page
+            console.log("[+] Solved: " + solved);
+            res.redirect(`/problem?p=${id}&ctx=graded_${solved}`); // Redirect user back to problem page
 
         }
     });
