@@ -3,6 +3,25 @@ import multer from "multer";
 import { exec, spawn } from "child_process";
 import { PrismaClient } from '@prisma/client';
 
+async function completeProblem(problem_id, problem_pts, username) {
+    const prisma = new PrismaClient();
+    const user = await prisma.account.update({
+        where: {
+            name: username
+        },
+        data: {
+            solved_problems: {
+                connect: {
+                    id: problem_id
+                }
+            },
+            points: {
+                increment: problem_pts
+            }
+        }
+    });
+    return user;
+}
 
 const upload = multer({
     dest: "./uploads/",
@@ -73,7 +92,11 @@ api.post(async (req, res) =>{
 
             // Check if the response is correct
             if (stdout == "\"" + problem.test_case_outputs + "\"\n" || stdout == problem.test_case_outputs + "\n") {
-                // TODO Add solves
+                
+                // Tell database to link problem to user, showing that the user has solved this problem.
+
+                completeProblem(problem.id, problem.points, name);
+
                 solved = true;
             }
 
