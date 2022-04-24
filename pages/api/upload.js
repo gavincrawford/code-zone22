@@ -5,7 +5,23 @@ import { PrismaClient } from '@prisma/client';
 
 async function completeProblem(problem_id, problem_pts, username) {
     const prisma = new PrismaClient();
-    const user = await prisma.account.update({
+
+    // Recalculate the user's points to retain accuracy
+    let total_pts = problem_pts;
+    const user = await prisma.account.findUnique({
+        where: {
+            name: username
+        },
+        include: {
+            solved_problems: true
+        }
+    })
+    for (let i = 0; i < user.solved_problems.length; i++) {
+        total_pts += user.solved_problems[i].points;
+    }
+
+    // Update the database record for the user
+    const update = await prisma.account.update({
         where: {
             name: username
         },
@@ -16,11 +32,12 @@ async function completeProblem(problem_id, problem_pts, username) {
                 }
             },
             points: {
-                increment: problem_pts
+                set: total_pts
             }
         }
     });
-    return user;
+
+    return update;
 }
 
 const upload = multer({
