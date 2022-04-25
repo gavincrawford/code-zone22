@@ -7,7 +7,7 @@ async function completeProblem(problem_id, problem_pts, username) {
     const prisma = new PrismaClient();
 
     // Recalculate the user's points to retain accuracy
-    let total_pts = problem_pts;
+    let total_pts = 0;
     const user = await prisma.account.findUnique({
         where: {
             name: username
