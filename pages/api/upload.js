@@ -13,7 +13,7 @@ async function completeProblem(problem_id, problem_pts, username) {
         include: {
             solved_problems: true
         }
-    })
+    });
     // Check if problem id is already solved
     let total_pts = null;
     if (user.solved_problems.some(problem => problem.id === problem_id)) {
@@ -92,7 +92,7 @@ api.post(async (req, res) =>{
         where: {
             name: name
         }
-    })
+    });
 
 
     console.log(`[+] Got file: ${req.file.filename}`);

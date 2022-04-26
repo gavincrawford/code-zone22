@@ -1,4 +1,4 @@
-import { prisma } from "../../src/db"
+import { prisma } from "../../src/db";
 import nc from "next-connect";
 
 const api = nc({

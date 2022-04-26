@@ -52,7 +52,7 @@ const NewProblem = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 export default NewProblem;
