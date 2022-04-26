@@ -1,11 +1,10 @@
 import Header from '../components/header';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "../src/db";
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { useCookies } from "react-cookie";
 
 export async function getServerSideProps(ctx) {
     const query = ctx.query;
-    const prisma = new PrismaClient();
     const problem = await prisma.problem.findUnique({
         where: {
             id: parseInt(query.p)

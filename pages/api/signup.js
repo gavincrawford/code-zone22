@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../src/db";
 import nc from "next-connect";
 
 const api = nc({
@@ -12,7 +12,6 @@ const api = nc({
 });
 
 api.post((req, res) => {
-    const prisma = new PrismaClient();
     prisma.account.create({
         data: {
             name: req.body.username,

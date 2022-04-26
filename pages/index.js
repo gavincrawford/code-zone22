@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "../src/db";
 import Header from '../components/header';
 import RedirectButton from '../components/button';
 
 export async function getServerSideProps(ctx) {
     // This will load server-side assets like problems, user profiles, and leaderboard
-    const prisma = new PrismaClient();
     const problems = await prisma.problem.findMany();
     return {
         props: { problems }

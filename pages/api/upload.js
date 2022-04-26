@@ -1,10 +1,9 @@
 import nc from "next-connect";
 import multer from "multer";
 import { exec, spawn } from "child_process";
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "../../src/db";
 
 async function completeProblem(problem_id, problem_pts, username) {
-    const prisma = new PrismaClient();
 
     // Recalculate the user's points to retain accuracy
     const user = await prisma.account.findUnique({
@@ -84,7 +83,6 @@ api.post(async (req, res) =>{
     console.log(`[+] User "${name}" attempting p${id}`);
 
     // Fetch information from database
-    const prisma = new PrismaClient();
     const problem = await prisma.problem.findUnique({
         where: {
             id: parseInt(req.query.p)
