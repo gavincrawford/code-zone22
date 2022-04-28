@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 
 const Login = () => {
 
-    const [setCookie] = useCookies(["user"]);
+    const [cookie, setCookie] = useCookies(["user"]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
