@@ -76,9 +76,9 @@ const Problem = ({ problem, id, context}) => {
                         {/* fancy multer form data thingy, no idea how it works i got this off stack overflow */}
                         <form className="py-2" action={"/api/upload?p=" + id + "&u=" + user} method="post" encType="multipart/form-data">
                             <input type="file" name="uploaded_file"></input>
-                            { user != undefined
-                                ? <button type="submit" className="rounded bg-blue-200 px-4">Submit</button>
-                                : <button type="submit" className="rounded bg-gray-200 text-gray-500 px-4" disabled>Submit (Log in first)</button>
+                            { user == undefined && context == "none"
+                                ? <button type="submit" className="rounded bg-gray-200 text-gray-500 px-4" disabled>Submit (Log in first)</button>
+                                : <button type="submit" className="rounded bg-blue-200 px-4">Submit</button>
                             }
 
                             <div>
