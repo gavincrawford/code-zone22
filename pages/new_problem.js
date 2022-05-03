@@ -37,8 +37,8 @@ const NewProblem = () => {
         const output = document.getElementById("output").value;
         const type = document.getElementById("type").value;
 
-        let case_inputs = {};
-        let case_output = {
+        const case_inputs = {};
+        const case_output = {
             type: type,
             value: output
         };
@@ -58,7 +58,7 @@ const NewProblem = () => {
         cases += {
             inputs: case_inputs,
             output: case_output
-        }
+        };
 
     }
 
@@ -101,16 +101,14 @@ const NewProblem = () => {
                         <div>
                             {
                                 // cases in construction get their inputs and outputs put here
-                                cases.map((case_, idx) => {
-                                    return (
-                                        <div>
-                                            <div className="text-2xl">Case {idx}</div>
-                                            <div className="flex justify-end">
-                                                <button className="rounded-full px-2 bg-red-300">X</button>
-                                            </div>
+                                cases.map((case_, idx) => (
+                                    <div key={idx}>
+                                        <div className="text-2xl">Case {idx}</div>
+                                        <div className="flex justify-end">
+                                            <button className="rounded-full px-2 bg-red-300">X</button>
                                         </div>
-                                    )
-                                })
+                                    </div>
+                                ))
                             }
                         </div>
 
