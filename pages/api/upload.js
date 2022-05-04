@@ -2,6 +2,7 @@ import nc from "next-connect";
 import multer from "multer";
 import { exec, spawn } from "child_process";
 import { prisma } from "../../src/db";
+import removeUploadedFiles from "multer/lib/remove-uploaded-files";
 
 async function completeProblem(problem_id, problem_pts, username) {
 
@@ -43,6 +44,31 @@ async function completeProblem(problem_id, problem_pts, username) {
     });
 
     return update;
+}
+
+async function checkCase(inputs, output, path) {
+    // execute file with exec and feed inputs to it. after it finishes, read the stdout.
+    // if the output is correct, return true.
+    // if the output is incorrect, return false.
+    let result = await new Promise((resolve, reject) => {
+        let proc = exec(`python3 ${path}`, (err, stdout, stderr) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(stdout);
+            }
+        });
+        for (let input in inputs) {
+            proc.stdin.write(inputs[input] + "\n");
+        }
+    });
+    // Trim outputs
+    result = result.trim();
+    output = output.trim();
+    // Log and check final result
+    let res = (result === output);
+    console.log("[+] Expected " + output + ", got " + result + ". Resolved to: " + res);
+    return res;
 }
 
 const upload = multer({
@@ -93,41 +119,26 @@ api.post(async (req, res) =>{
             name: name
         }
     });
-
+    const cases_obj = JSON.parse(problem.test_cases);
 
     console.log(`[+] Got file: ${req.file.filename}`);
 
-    const proc = exec(`python3 ${req.file.path}`, {
-        timeout: 1000, // 1 second
-        maxBuffer: 1024 * 1024 * 10 // 10MB
-    }, (err, stdout, stderr) => {
-        if (err) {
-            console.log(err);
-            // TODO: Error traces
-            res.redirect(`/problem?p=${id}&ctx=error`);
-        } else {
+    for (let case_name in cases_obj) {
 
-            console.log(stdout);
+        const this_case = cases_obj[case_name];
+        console.log("[+] Checking case...");
 
-            let solved = false;
-
-            // Check if the response is correct
-            if (stdout == "\"" + problem.test_case_outputs + "\"\n" || stdout == problem.test_case_outputs + "\n") {
-                
-                // Tell database to link problem to user, showing that the user has solved this problem.
-
-                completeProblem(problem.id, problem.points, name);
-
-                solved = true;
-            }
-
-            console.log("[+] Solved: " + solved);
-            res.redirect(`/problem?p=${id}&ctx=graded_${solved}`); // Redirect user back to problem page
-
+        if (!(await checkCase(this_case.inputs, this_case.output, req.file.path))) {
+            res.redirect(`/problem?p=${id}&ctx=graded_false`);
+            break;
         }
-    });
 
-    proc.stdin.write(problem.test_case_inputs + "\n"); // Inputs
+    }
+
+    // If we've made it this far, we can assume the problem is correct
+
+    completeProblem(problem.id, problem.points, name);
+    res.redirect(`/problem?p=${id}&ctx=graded_true`);
 
 });
 
