@@ -1,4 +1,5 @@
 import Header from '../components/header';
+import Submit from "../components/submit"
 import { prisma } from "../src/db";
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { useCookies } from "react-cookie";
@@ -71,9 +72,7 @@ const Problem = ({ problem, id, context}) => {
                     <div className="grow bg-gray-100">
                         <div className="font-extrabold">example inputs</div>
                         {
-                            example_cases.case0.inputs.map((input, index) => {
-                                return (<>{"⇛ \""}{example_cases.case0.inputs[index]}{"\""}<br/></>)
-                            })
+                            example_cases.case0.inputs.map((input, index) => (<span key={index}>{"⇛ \""}{example_cases.case0.inputs[index]}{"\""}<br/></span>))
                         }
                         <div className="font-extrabold">example outputs</div>
                         {"⇚ \""}{example_cases.case0.output}{"\""}
@@ -83,11 +82,7 @@ const Problem = ({ problem, id, context}) => {
                         {/* fancy multer form data thingy, no idea how it works i got this off stack overflow */}
                         <form className="py-2" action={"/api/upload?p=" + id + "&u=" + user} method="post" encType="multipart/form-data">
                             <input type="file" name="uploaded_file"></input>
-                            { user == undefined
-                                ? <button type="submit" className="rounded bg-gray-200 text-gray-500 px-4" disabled>Submit (Log in first)</button>
-                                : <button type="submit" className="rounded bg-blue-200 px-4">Submit</button>
-                            }
-
+                            <Submit></Submit>
                             <div>
                                 {context == "graded_true" ? <span className="bg-green-500 rounded px-2 text-2xl">Correct</span> : null}
                                 {context == "graded_false" ? <span className="bg-red-500 rounded px-2 text-2xl">Incorrect</span> : null}

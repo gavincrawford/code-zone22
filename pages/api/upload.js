@@ -46,19 +46,19 @@ async function completeProblem(problem_id, problem_pts, username) {
     return update;
 }
 
-async function checkCase(inputs, output, path) {
+async function checkCase(inputs, output, type, path) {
     // execute file with exec and feed inputs to it. after it finishes, read the stdout.
     // if the output is correct, return true.
     // if the output is incorrect, return false.
     let result = await new Promise((resolve, reject) => {
-        let proc = exec(`python3 ${path}`, (err, stdout, stderr) => {
+        const proc = exec(`python3 ${path}`, (err, stdout, stderr) => {
             if (err) {
                 reject(err);
             } else {
                 resolve(stdout);
             }
         });
-        for (let input in inputs) {
+        for (const input in inputs) {
             proc.stdin.write(inputs[input] + "\n");
         }
     });
@@ -66,7 +66,7 @@ async function checkCase(inputs, output, path) {
     result = result.trim();
     output = output.trim();
     // Log and check final result
-    let res = (result === output);
+    const res = (result === output);
     console.log("[+] Expected " + output + ", got " + result + ". Resolved to: " + res);
     return res;
 }
@@ -123,12 +123,12 @@ api.post(async (req, res) =>{
 
     console.log(`[+] Got file: ${req.file.filename}`);
 
-    for (let case_name in cases_obj) {
+    for (const case_name in cases_obj) {
 
         const this_case = cases_obj[case_name];
         console.log("[+] Checking case...");
 
-        if (!(await checkCase(this_case.inputs, this_case.output, req.file.path))) {
+        if (!(await checkCase(this_case.inputs, this_case.output, this_case.type, req.file.path))) {
             res.redirect(`/problem?p=${id}&ctx=graded_false`);
             break;
         }
