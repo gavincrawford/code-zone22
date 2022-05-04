@@ -1,6 +1,7 @@
 import Header from "../components/header";
 import RedirectButton from "../components/button";
 import { useCookies } from "react-cookie";
+const config = require("../code-comp.json");
 
 const Login = () => {
 
@@ -47,7 +48,7 @@ const Login = () => {
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Login</button>
                         </div>
                     </form>
-                    <RedirectButton href="/signup">Or sign up!</RedirectButton> {/* TODO this button kinda sucks, make it look better */}
+                    {config["allow-signups"] ? <RedirectButton href="/signup">Or sign up!</RedirectButton> : <></>}
                 </div>
             </div>
         </>

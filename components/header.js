@@ -1,5 +1,6 @@
 import RedirectButton from "./button";
 import { useCookies } from "react-cookie";
+const config = require("../code-comp.json");
 
 function Header() {
 
@@ -17,7 +18,7 @@ function Header() {
                         ?
                         <RedirectButton href="/logout">logout <span className="text-white">({cookie.user})</span></RedirectButton>
                         :
-                        <RedirectButton href="/login">login/signup</RedirectButton>
+                        <RedirectButton href="/login">login{config["allow-signups"] ? <>/signup</> : <></>}</RedirectButton>
                 }
             </div>
         </div>
