@@ -66,7 +66,12 @@ async function checkCase(inputs, output, type, path) {
     result = result.trim();
     output = output.trim();
     // Log and check final result
-    const res = (result === output);
+    let res;
+    if (type == "number") {
+        res = Math.abs(parseFloat(result) - parseFloat(output)) < 0.001;
+    } else {
+        res = (result === output);
+    }
     console.log("[+] Expected " + output + ", got " + result + ". Resolved to: " + res);
     return res;
 }
