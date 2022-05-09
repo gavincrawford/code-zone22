@@ -14,6 +14,7 @@ model Account {
   organizer       Boolean   @default(false)
   solved_problems Problem[]
   points          Int       @default(0)
+  team            Int       @default(0)
 }
 
 model Problem {

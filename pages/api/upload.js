@@ -53,7 +53,7 @@ async function checkCase(inputs, output, type, path) {
     let result = await new Promise((resolve, reject) => {
         const proc = exec(`python3 ${path}`, (err, stdout, stderr) => {
             if (err) {
-                reject(err);
+                resolve(stdout);
             } else {
                 resolve(stdout);
             }
