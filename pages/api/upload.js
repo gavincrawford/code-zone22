@@ -51,7 +51,10 @@ async function checkCase(inputs, output, type, path) {
     // if the output is correct, return true.
     // if the output is incorrect, return false.
     let result = await new Promise((resolve, reject) => {
-        const proc = exec(`python3 ${path}`, (err, stdout, stderr) => {
+        const proc = exec(`python3 ${path}`, {
+            timeout: 500, // 1 second
+            maxBuffer: 5 * 1024 * 1024, // 5MB
+        }, (err, stdout, stderr) => {
             if (err) {
                 resolve(stdout);
             } else {
@@ -64,13 +67,12 @@ async function checkCase(inputs, output, type, path) {
     });
     // Trim outputs
     result = result.trim();
-    output = output.join("\n").trim();
     // Log and check final result
     let res;
     if (type == "number") {
         res = Math.abs(parseFloat(result) - parseFloat(output)) < 0.001;
     } else {
-        res = (result === output);
+        res = (result === output.join("\n"));
     }
     console.log("[+] Expected " + output + ", got " + result + ". Resolved to: " + res);
     return res;
