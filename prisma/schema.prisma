@@ -20,7 +20,7 @@ model Account {
 model Problem {
   id            Int      @id @default(autoincrement())
   name          String   @unique
-  description   String   @unique
+  description   String
   difficulty    Float    @default(0.0)
   points        Int      @default(0)
   example_cases String   @default("")
