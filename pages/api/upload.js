@@ -64,7 +64,7 @@ async function checkCase(inputs, output, type, path) {
     });
     // Trim outputs
     result = result.trim();
-    output = output.trim();
+    output = output.join("\n").trim();
     // Log and check final result
     let res;
     if (type == "number") {
@@ -133,7 +133,7 @@ api.post(async (req, res) =>{
         const this_case = cases_obj[case_name];
         console.log("[+] Checking case...");
 
-        if (!(await checkCase(this_case.inputs, this_case.output, this_case.type, req.file.path))) {
+        if (!(await checkCase(this_case.inputs, this_case.outputs, this_case.type, req.file.path))) {
             res.redirect(`/problem?p=${id}&ctx=graded_false`);
             break;
         }

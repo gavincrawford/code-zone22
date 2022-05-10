@@ -13,11 +13,17 @@ while (true) {
         if (i == "") { break } else { inputs.push(i) };
     }
 
-    const output = prompt(`output${x}: `);
+    console.log(`[OUTPUT${x}] Press enter to cancel output feed.`);
+    let outputs = [];
+
+    while (true) {
+        const o = prompt(`output${x}.${outputs.length}: `);
+        if (o == "") { break } else { outputs.push(o) };
+    }
 
     cases[`case${x}`] = {
         inputs: inputs,
-        output: output,
+        outputs: outputs,
         type: prompt("Type (string/number): ")
     }
 
