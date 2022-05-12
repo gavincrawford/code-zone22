@@ -1,6 +1,7 @@
 import Header from "../components/header";
 import RedirectButton from "../components/button";
 import { useCookies } from "react-cookie";
+import sha256 from "crypto-js/sha256";
 const config = require("../code-comp.json");
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
         console.log(e);
 
         const username = e.target[0].value; 
-        const password = e.target[1].value;
+        const password = sha256(e.target[1].value).toString();
 
         const response = await fetch("/api/login", {
             method: "POST",

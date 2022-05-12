@@ -7,7 +7,7 @@ function Submit() {
     if (user) {
         return (<button type="submit" className="rounded bg-blue-200 px-4">Submit</button>);
     } else {
-        return (<button type="submit" className="rounded bg-gray-200 px-4">Please log in.</button>);
+        return (<button type="submit" className="rounded bg-gray-200 px-4" disabled>Please log in.</button>);
     }
 }
 

@@ -130,6 +130,7 @@ api.post(async (req, res) =>{
 
     console.log(`[+] Got file: ${req.file.filename}`);
 
+    let cases_solved = 0;
     for (const case_name in cases_obj) {
 
         const this_case = cases_obj[case_name];
@@ -138,14 +139,17 @@ api.post(async (req, res) =>{
         if (!(await checkCase(this_case.inputs, this_case.outputs, this_case.type, req.file.path))) {
             res.redirect(`/problem?p=${id}&ctx=graded_false`);
             break;
+        } else {
+            cases_solved++;
         }
 
     }
 
-    // If we've made it this far, we can assume the problem is correct
-
-    completeProblem(problem.id, problem.points, name);
-    res.redirect(`/problem?p=${id}&ctx=graded_true`);
+    // If all of the test cases passed, complete the problem
+    if (cases_solved === Object.keys(cases_obj).length) {
+        completeProblem(problem.id, problem.points, name);
+        res.redirect(`/problem?p=${id}&ctx=graded_true`);
+    }
 
 });
 
