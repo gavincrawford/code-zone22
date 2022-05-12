@@ -15,3 +15,7 @@ sudo docker run --name=codezone -p 3000:3000 -p 5555:5555 kylandodds/webserver:l
 ```
 
 The server will host on https://localhost:3000.
+
+## Configuring CodeZone/CodeComp
+
+See ```code-comp.json```, all configurable values should be included there.
