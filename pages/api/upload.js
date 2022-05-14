@@ -156,6 +156,7 @@ api.post(async (req, res) =>{
         console.log("[+] Checking case...");
 
         if (!(await checkCase(this_case.inputs, this_case.outputs, this_case.type, req.file.path))) {
+            console.log("[++] " + name + " submitted " + id + " (false)")
             res.redirect(`/problem?p=${id}&ctx=graded_false`);
             break;
         } else {
@@ -167,6 +168,7 @@ api.post(async (req, res) =>{
     // If all of the test cases passed, complete the problem
     if (cases_solved === Object.keys(cases_obj).length) {
         completeProblem(problem.id, problem.points, name);
+        console.log("[++] " + name + " submitted " + id + " (false)")
         res.redirect(`/problem?p=${id}&ctx=graded_true`);
     }
 
