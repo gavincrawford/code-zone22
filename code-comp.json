@@ -1,3 +1,9 @@
 {
-    "allow-signups": true
+    "allow-signups": true,
+    "username-len-max": 32,
+    "username-len-min": 3,
+    "username-disallow-non-ascii": true,
+    "difficulty-easy": 2.5,
+    "difficulty-medium": 5,
+    "difficulty-hard": 7.5
 }

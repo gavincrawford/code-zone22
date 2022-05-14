@@ -30,7 +30,9 @@ const Login = () => {
         const data = await response.json();
 
         if (data.success) {
-            setCookie("user", data.name, { path: "/", maxAge: 21600 });
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            setCookie("user", data.name, { path: "/", expires: tomorrow});
             window.location.href = "/";
         } else {
             alert(data.message);
