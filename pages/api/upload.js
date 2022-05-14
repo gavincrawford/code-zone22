@@ -7,7 +7,7 @@ import removeUploadedFiles from "multer/lib/remove-uploaded-files";
 async function completeProblem(problem_id, problem_pts, username) {
 
     // Recalculate the user's points to retain accuracy
-    const user = await prisma.account.findUnique({
+    let user = await prisma.account.findUnique({
         where: {
             name: username
         },
@@ -15,20 +15,9 @@ async function completeProblem(problem_id, problem_pts, username) {
             solved_problems: true
         }
     });
-    
-    // Check if problem id is already solved
-    let total_pts = null;
-    if (user.solved_problems.some(problem => problem.id === problem_id)) {
-        total_pts = 0;
-    } else {
-        total_pts = problem_pts;
-    }
-    for (let i = 0; i < user.solved_problems.length; i++) {
-        total_pts += user.solved_problems[i].points;
-    }
 
     // Update the database record for the user
-    const update = await prisma.account.update({
+    let update = await prisma.account.update({
         where: {
             name: username
         },
@@ -37,12 +26,41 @@ async function completeProblem(problem_id, problem_pts, username) {
                 connect: {
                     id: problem_id
                 }
-            },
+            }
+        }
+    });
+
+    console.log("[+] Added problem solve connector");
+
+    // Re-pull the user account
+    user = await prisma.account.findUnique({
+        where: {
+            name: username
+        },
+        include: {
+            solved_problems: true
+        }
+    });
+
+    // Check if problem id is already solved
+    let total_pts = 0;
+    for (let i = 0; i < user.solved_problems.length; i++) {
+        total_pts += user.solved_problems[i].points;
+    }
+
+    // Update user again
+    update = await prisma.account.update({
+        where: {
+            name: username
+        },
+        data: {
             points: {
                 set: total_pts
             }
         }
     });
+
+    console.log("[+] Recalculated points, resolved to " + total_pts);
 
     return update;
 }
