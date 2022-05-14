@@ -79,40 +79,6 @@ async function checkCase(inputs, output, type, path) {
     return res;
 }
 
-async function recalculateScore(who) {
-
-    console.log("[HOTFIX] Force recalculating point values for " + who);
-
-    const user = await prisma.account.findUnique({
-        where: {
-            name: who
-        },
-        include: {
-            solved_problems: true
-        }
-    });
-
-    let total_pts = 0;
-
-    for (let i = 0; i < user.solved_problems.length; i++) {
-        total_pts += user.solved_problems[i].points;
-    }
-
-    const update = await prisma.account.update({
-        where: {
-            name: who
-        },
-        data: {
-            points: {
-                set: total_pts
-            }
-        }
-    });
-
-    return update;
-
-}
-
 const upload = multer({
     dest: "./uploads/",
     filename: (req, file, cb) => {
@@ -172,7 +138,6 @@ api.post(async (req, res) =>{
         console.log("[+] Checking case...");
 
         if (!(await checkCase(this_case.inputs, this_case.outputs, this_case.type, req.file.path))) {
-            recalculateScore(name) // Hotfix, remove later
             res.redirect(`/problem?p=${id}&ctx=graded_false`);
             break;
         } else {
@@ -184,7 +149,6 @@ api.post(async (req, res) =>{
     // If all of the test cases passed, complete the problem
     if (cases_solved === Object.keys(cases_obj).length) {
         completeProblem(problem.id, problem.points, name);
-        recalculateScore(name); // Hotifx, remove later
         res.redirect(`/problem?p=${id}&ctx=graded_true`);
     }
 
