@@ -168,7 +168,7 @@ api.post(async (req, res) =>{
     // If all of the test cases passed, complete the problem
     if (cases_solved === Object.keys(cases_obj).length) {
         completeProblem(problem.id, problem.points, name);
-        console.log("[++] " + name + " submitted " + id + " (false)")
+        console.log("[++] " + name + " submitted " + id + " (true)")
         res.redirect(`/problem?p=${id}&ctx=graded_true`);
     }
 
